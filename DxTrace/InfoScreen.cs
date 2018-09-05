@@ -11,9 +11,26 @@ using System.Windows.Forms;
 
 namespace DxTrace
 {
-    public partial class InfoScreen : Form
+    public partial class InfoScreen : Form, IMessage
     {
         private bool _Block;
+
+        public string Prefix { get; set; }
+
+        private bool ShowPrefix { get; set; }
+        private bool TimeStamp { get; set; }
+
+        private DxTOptions _Options;
+        public DxTOptions Options
+        {
+            get { return _Options; }
+            set
+            {
+                if (value.HasFlag(DxTOptions.Prefix)) ShowPrefix = true;
+                if (value.HasFlag(DxTOptions.TimeStamp)) TimeStamp = true;
+                _Options = value;
+            }
+        }
 
         public InfoScreen()
         {
@@ -21,26 +38,13 @@ namespace DxTrace
 
         }
 
-        internal void WriteLine(string text)
-        {
-            Log.Text += text + "\n";
 
-            Log.SelectionStart = Log.Text.Length;
-            Log.ScrollToCaret();
-        }
 
-        internal void Write(string text)
-        {
-            Log.Text += text;
-            /*
-            Log.SelectionStart = Log.Text.Length;
-            Log.ScrollToCaret();*/
-        }
 
-        public string GetLog()
+        /*public string GetLog()
         {
             return Log.Text;
-        }
+        }*/
 
 
         private void btLeave_Click(object sender, EventArgs e)
@@ -48,7 +52,7 @@ namespace DxTrace
             this.Close();
         }
 
-        internal async void KillAfter(int time)
+        public async void KillAfter(int time)
         {
             btLeave.Visible = true;
             btAlive.Visible = true;
@@ -74,5 +78,30 @@ namespace DxTrace
             _Block = true;
 
         }
+
+
+        #region graph
+        public void BeginLine(string message = null, bool prefix = true)
+        {
+            if (prefix && ShowPrefix) message = $"[{Prefix}] {message}";
+            Log.Text += message;
+        }
+
+        public void EndLine(string message = null)
+        {
+           // Log.Text += text;
+            Log.Text += message + Environment.NewLine;
+
+        }
+
+        public void WriteLine(string message = null, bool prefix = true)
+        {
+            if (prefix && ShowPrefix) message = $"[{Prefix}] {message}";
+            Log.Text += message + Environment.NewLine;
+
+            Log.SelectionStart = Log.Text.Length;
+            Log.ScrollToCaret();
+        }
+        #endregion
     }
 }

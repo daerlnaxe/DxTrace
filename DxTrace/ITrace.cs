@@ -59,9 +59,9 @@ namespace DxTrace
 
         public static void RemoveLast()
         {
-            var lastListener = Listeners[Listeners.Count];
+            var lastListener = Listeners[Listeners.Count-1];
             lastListener = null;
-            Listeners.RemoveAt(Listeners.Count);
+            Listeners.RemoveAt(Listeners.Count-1);
         }
     }
 }

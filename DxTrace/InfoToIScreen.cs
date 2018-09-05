@@ -40,7 +40,7 @@ namespace DxTrace
         {
             if (prefix && ShowPrefix) message = $"[{Prefix}] {message}";
 
-            IScreen.Text += message;
+            //IScreen.Log.Text += message;
         }
 
         public void EndLine(string message = null)

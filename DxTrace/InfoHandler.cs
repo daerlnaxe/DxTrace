@@ -24,7 +24,7 @@ namespace Pack_My_Game
         public bool ActiveLog { get; set; }
         public string OutPutLog { get; set; }
 
-        //private InfoScreen IScreen { get; set; }
+       // private InfoScreen IScreen { get; set; }
 
         /// <summary>
         /// Redirige le flux de sortie selon les choix
@@ -37,17 +37,20 @@ namespace Pack_My_Game
             Prefix = prefix;
             ActiveWindow = window;
 
-            //if (ActiveWindow) IScreen = new InfoScreen();
+         //   if (ActiveWindow) IScreen = new InfoScreen();
         }
 
-
+        public void ShowWindow()
+        {
+         //   if (ActiveWindow) IScreen.Show(); ;
+        }
 
         public void SetLogActive(string fileLog, bool overWrite)
         {
             ActiveLog = true;
             OutPutLog = fileLog;
 
-           // if (overWrite) using (File.Open(fileLog, FileMode.Create)) ;
+            if (overWrite) using (File.Open(fileLog, FileMode.Create)) ;
         }
 
 
@@ -57,7 +60,7 @@ namespace Pack_My_Game
 
             /*if (ActiveConsole)*/
             Debug.WriteLine(message);
-            //if (ActiveWindow) IScreen.WriteLine(message);
+           // if (ActiveWindow) IScreen.WriteLine(message);
             if (ActiveLog)
             {
                 using (StreamWriter fs = new StreamWriter(OutPutLog, true))
@@ -73,7 +76,7 @@ namespace Pack_My_Game
             if (prefix) message = $"[{Prefix}] {message}";
             /*if (ActiveConsole)*/
             Debug.Write(message);
-            //if (ActiveWindow) IScreen.Write(message);
+        //    if (ActiveWindow) IScreen.Write(message);
             if (ActiveLog)
             {
                 using (StreamWriter fs = new StreamWriter(OutPutLog, true))
@@ -84,7 +87,15 @@ namespace Pack_My_Game
 
         }
 
+        public void KillWindowAfter(int time)
+        {
+      //      IScreen.KillAfter(time);
+        }
 
+        public void KillWindow()
+        {
+         //   IScreen.Close();
+        }
 
 
 

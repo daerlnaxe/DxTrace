@@ -11,15 +11,7 @@ namespace DxTrace
     {
         public static List<IMessage> Listeners { get; } = new List<IMessage>();
 
-        public static void AddListener(IMessage listener)
-        {
-            Listeners.Add(listener);
-        }
 
-        public static void RemoveListener(IMessage listener)
-        {
-            Listeners.Remove(listener);
-        }
 
         /// <summary>
         /// Begin a line
@@ -62,6 +54,35 @@ namespace DxTrace
             var lastListener = Listeners[Listeners.Count-1];
             lastListener = null;
             Listeners.RemoveAt(Listeners.Count-1);
+        }
+
+
+
+        public static void AddListener(IMessage listener)
+        {
+            Listeners.Add(listener);
+        }
+
+        public static void RemoveListener(IMessage listener)
+        {
+            Listeners.Remove(listener);
+        }
+
+
+        public static void AddListeners(List<IMessage> loggers)
+        {
+            foreach (IMessage logger in loggers)
+            {
+                Listeners.Add(logger);
+            }
+        }
+
+        public static void RemoveListerners(List<IMessage> loggers)
+        {
+            foreach (IMessage logger in loggers)
+            {
+                Listeners.Remove(logger);
+            }
         }
     }
 }
